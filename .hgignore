@@ -1,0 +1,139 @@
+############################################################
+## Visual Studio 2012
+############################################################
+syntax: glob
+
+## User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+[Bb]in/
+[Oo]bj/
+
+## Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
+# !packages/*/build/ 
+
+## MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*_i.c
+*_p.c
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.log
+*.scc
+
+## Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
+## Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+
+## Guidance Automation Toolkit
+*.gpState
+
+## ReSharper Ignores
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+## TeamCity Ignores
+_TeamCity*
+
+## DotCover Ignores
+
+*.dotover
+
+## NCrunch Ignores
+*.ncrunch*
+.*crunch*.local.xml
+
+## Installshield output folder
+[Ee]xpress/
+
+## DocProject Ignores
+DocProject/buildhelp/
+DocProject/Help/*.HxT
+DocProject/Help/*.HxC
+DocProject/Help/*.hhc
+DocProject/Help/*.hhk
+DocProject/Help/*.hhp
+DocProject/Help/Html2
+DocProject/Help/html
+
+## Click-Once Ignores
+publish/
+
+## Publish Web Output
+*.[Pp]ublish.xml
+*.pubxml
+
+## Windows Azure Build Ignores
+csx
+*.build.csdef
+
+## Windows Store Ignores
+AppPackages/
+
+## RIA/Silverlight projects
+Generated_Code/
+
+## SQL Server Ignores
+App_Data/*.mdf
+App_Data/*.ldf
+
+## Backup & Report Files when converting a solution
+_UpgradeReport_Files/
+[Bb]ackup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+
+## Miscellaneous Ignores
+sql/
+*.[Cc]ache
+ClientBin/
+[Ss]tyle[Cc]op.*
+~$*
+*~
+*.dbmdl
+*.[Pp]ublish.xml
+*.pfx
+*.publishsettings
+
+## Windows Ignores
+$RECYCLE.BIN/
+[Tt]humbs.db
+ehthumbs.db
+Desktop.ini
+
+## Mac Ignores
+.DS_Store
