@@ -8,10 +8,9 @@ System Requirements
 ===================
 Windows XP (Service Pack 3), Windows Vista, Windows 7, Windows 8, Windows 8.1 (32-/64-bit)
 
-* .NET Framework 4+ (Client Profile) or Full
-or
-
+* .NET Framework 4+ (Client Profile) or Full or
 * Mono 2.8+
+
 Other Systems (Unix/Linux/Mac OS X etc.) (32-/64-bit)
 
 * Mono 2.8+
