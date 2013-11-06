@@ -9,7 +9,7 @@ namespace Visual_Entropy
 {
 	class Program
 	{
-		// Parameters that are one character long can use '-' or '\' as a leading character.
+		// Parameters that are one character long can use only '-' as a leading character.
 		// Otherwise, 'word-length' paramters follow the convention of '--' beforehand.
 		// The last parameter must always be the output file name/path.
 		public static int Main(string[] args)
@@ -71,31 +71,29 @@ namespace Visual_Entropy
 			for (int index = 0; index < args.Length; index++)
 			{
 				string param = args[index];
-				if (param.Length == 2)
+				if (param[0] == '-')
 				{
-					if (param[0] != '-' && param[0] != '\\') throw new FormatException("Invalid argument.");
-					else
+					switch (param[1])
 					{
-						switch (param[1])
-						{
-							case ('w'):
-							case ('h'):
-								if (index != args.Length - 1 && (args[index + 1][0] != '-' ||
-									args[index + 1][0] != '\\'))
-								{
-									index++;
-								}
-								else throw new FormatException(String.Format("Missing value for argument '{0}'.",
-									param[1]));
-								break;
-						}
-					}
-				}
-				else
-				{
-					if (index != args.Length - 1 && String.Format("{0}{1}", param[0], param[1]) != "--")
-					{
-						throw new FormatException("Invalid argument.");
+						case ('w'):
+						case ('h'):
+							if (index != args.Length - 1 && (args[index + 1][0] != '-' || args[index + 1][0] != '\\'))
+							{
+								index++;
+							}
+							else throw new FormatException(String.Format("Missing value for argument '{0}'.",
+								param[1]));
+							break;
+						case ('-'):
+							if (index != args.Length - 1 && String.Format("{0}{1}", param[0], param[1]) != "--")
+							{
+								throw new FormatException("Invalid argument.");
+							}
+							break;
+						default:
+							if(index != args.Length - 1)
+								throw new FormatException("Invalid argument.");
+							break;
 					}
 				}
 
