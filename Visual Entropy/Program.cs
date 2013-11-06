@@ -9,16 +9,22 @@ namespace Visual_Entropy
 {
 	class Program
 	{
-		public static void Main(string[] args)
+		// Parameters that are one character long can use '-' or '\' as a leading character.
+		// Otherwise, 'word-length' paramters follow the convention of '--' beforehand.
+		// The last parameter must always be the output file name/path.
+		public static int Main(string[] args)
 		{
+			int exitCode = 0;
 			try
 			{
+				Validate_Parameters(args);
+				int width = Int32.Parse(args[Array.IndexOf(args, "-w") + 1]);
+				int height = Int32.Parse(args[Array.IndexOf(args, "-h") + 1]);
+
 				Console.WriteLine("Visual Entropy");
 				Console.WriteLine("Copyright (c) 2013 Christopher Robert Philabaum");
 				Console.WriteLine();
 
-				int width = 512;
-				int height = 512;
 				string path = "temp.png";
 
 				Random rand = new Random();
@@ -32,17 +38,56 @@ namespace Visual_Entropy
 
 				Console.WriteLine();
 			}
-			catch(Exception error)
+			catch (Exception error)
 			{
 				Console.WriteLine();
 				Console.WriteLine(error.Message);
 				Console.WriteLine(error.StackTrace);
+
+				exitCode = 1;
 			}
 			finally
 			{
 				Console.WriteLine();
 				Console.Write("Press ENTER to continue... ");
 				Console.ReadKey();
+			}
+
+			return exitCode;
+		}
+
+		public static void Validate_Parameters(string[] args)
+		{
+			for (int index = 0; index < args.Length; index++)
+			{
+				string param = args[index];
+				if (param.Length == 2)
+				{
+					if (param[0] != '-' && param[0] != '\\') throw new FormatException("Invalid argument.");
+					else
+					{
+						switch (param[1])
+						{
+							case ('w'):
+							case ('h'):
+								if (index != args.Length - 1 && (args[index + 1][0] != '-' ||
+									args[index + 1][0] != '\\'))
+								{
+									index++;
+								}
+								else throw new FormatException(String.Format("Missing value for argument '{0}'.",
+									param[1]));
+								break;
+						}
+					}
+				}
+				else
+				{
+					if (index != args.Length - 1 && String.Format("{0}{1}", param[0], param[1]) != "--")
+					{
+						throw new FormatException("Invalid argument.");
+					}
+				}
 			}
 		}
 
@@ -51,7 +96,7 @@ namespace Visual_Entropy
 		public static int[,] Get_Pixels(Random rand, int width, int height, bool isAlpha = false)
 		{
 			// Width, Height, RGBa
-			int[,] pixels = new int[width,height];
+			int[,] pixels = new int[width, height];
 			for (int x = 0; x < width; x++)
 			{
 				for (int y = 0; y < height; y++)
@@ -59,7 +104,7 @@ namespace Visual_Entropy
 					byte bit = 0;
 					if ((uint)rand.Next(int.MinValue, int.MaxValue) >> 31 > 0) bit = 0xFF;
 					pixels[x, y] = 0;
-					pixels[x, y] = !isAlpha ? Set_Alpha(pixels[x, y], 255) : Set_Alpha(pixels[x,y], bit);
+					pixels[x, y] = !isAlpha ? Set_Alpha(pixels[x, y], 255) : Set_Alpha(pixels[x, y], bit);
 					pixels[x, y] = Set_Red(pixels[x, y], bit);
 					pixels[x, y] = Set_Green(pixels[x, y], bit);
 					pixels[x, y] = Set_Blue(pixels[x, y], bit);
@@ -99,7 +144,7 @@ namespace Visual_Entropy
 			return color;
 		}
 
-		public static int Set_Green(int color,  byte green)
+		public static int Set_Green(int color, byte green)
 		{
 			byte[] cBytes = Get_RGBa(color);
 			color = Convert.ToInt32(cBytes[3]); // Alpha
@@ -110,7 +155,7 @@ namespace Visual_Entropy
 			return color;
 		}
 
-		public static int Set_Blue(int color,  byte blue)
+		public static int Set_Blue(int color, byte blue)
 		{
 			byte[] cBytes = Get_RGBa(color);
 			color = Convert.ToInt32(cBytes[3]); // Alpha
