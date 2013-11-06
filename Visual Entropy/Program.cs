@@ -106,6 +106,15 @@ namespace Visual_Entropy
 
 		public static void Display_Help()
 		{
+			Console.WriteLine("Visual Entropy");
+			Console.WriteLine("Copyright (c) 2013 Christopehr Robert Philabaum");
+			Console.WriteLine();
+			Console.WriteLine("Usage: Visual Entropy [options] path/filename.png");
+			Console.WriteLine("Options:");
+			Console.WriteLine("  --help\t\t\tThe help display.");
+			Console.WriteLine("  -w pixels | --width pixels\tPicture width. Defaults to 256.");
+			Console.WriteLine("  -h pixels | --height pixels\tPicture height. Defaults to 256.");
+
 		}
 
 
