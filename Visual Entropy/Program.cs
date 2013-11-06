@@ -15,7 +15,12 @@ namespace Visual_Entropy
 		public static int Main(string[] args)
 		{
 			int exitCode = 0;
-			try
+			if (args.Contains("--help"))
+			{
+				Display_Help();
+				Console.WriteLine();
+			}
+			else try
 			{
 				Validate_Parameters(args);
 				int width = Int32.Parse(args[Array.IndexOf(args, "-w") + 1]);
@@ -89,6 +94,10 @@ namespace Visual_Entropy
 					}
 				}
 			}
+		}
+
+		public static void Display_Help()
+		{
 		}
 
 
