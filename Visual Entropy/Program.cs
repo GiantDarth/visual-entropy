@@ -131,12 +131,5 @@ namespace Visual_Entropy
 
 			return color;
 		}
-
-
-
-		public static int Round_By_Multiple(int value, int multiple)
-		{
-			return multiple * (value / multiple);
-		}
 	}
 }
