@@ -23,14 +23,21 @@ namespace Visual_Entropy
 			else try
 			{
 				Validate_Parameters(args);
-				int width = Int32.Parse(args[Array.IndexOf(args, "-w") + 1]);
-				int height = Int32.Parse(args[Array.IndexOf(args, "-h") + 1]);
+				int width = 256;
+				if(args.Contains("-w") || args.Contains("--width"))
+				{
+					width = Int32.Parse(args[Array.IndexOf(args, "-w") + 1]);
+				}
+				int height = 256;
+				if (args.Contains("-h") || args.Contains("--height"))
+				{
+					height = Int32.Parse(args[Array.IndexOf(args, "-h") + 1]);
+				}
+				string path = args[args.Length - 1];
 
 				Console.WriteLine("Visual Entropy");
 				Console.WriteLine("Copyright (c) 2013 Christopher Robert Philabaum");
 				Console.WriteLine();
-
-				string path = "temp.png";
 
 				Random rand = new Random();
 				Console.Write("Setting the values... ");
@@ -51,12 +58,10 @@ namespace Visual_Entropy
 
 				exitCode = 1;
 			}
-			finally
-			{
-				Console.WriteLine();
-				Console.Write("Press ENTER to continue... ");
-				Console.ReadKey();
-			}
+
+			Console.WriteLine();
+			Console.Write("Press ENTER to continue... ");
+			Console.ReadKey();
 
 			return exitCode;
 		}
@@ -92,6 +97,11 @@ namespace Visual_Entropy
 					{
 						throw new FormatException("Invalid argument.");
 					}
+				}
+
+				if (!args[args.Length - 1].EndsWith(".png") && !args[args.Length - 1].EndsWith(".PNG"))
+				{
+					throw new FormatException("The file doesn't end with '.png' or '.PNG'.");
 				}
 			}
 		}
