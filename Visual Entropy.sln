@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Visual Entropy", "Visual Entropy\Visual Entropy.csproj", "{69513028-D79D-47D5-9D5B-AABF77FBC303}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinaryToBitmap", "BinaryToBitmap\BinaryToBitmap.csproj", "{98D52283-1749-4EA0-B277-22D450EFF914}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{69513028-D79D-47D5-9D5B-AABF77FBC303}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69513028-D79D-47D5-9D5B-AABF77FBC303}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69513028-D79D-47D5-9D5B-AABF77FBC303}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98D52283-1749-4EA0-B277-22D450EFF914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98D52283-1749-4EA0-B277-22D450EFF914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98D52283-1749-4EA0-B277-22D450EFF914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98D52283-1749-4EA0-B277-22D450EFF914}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

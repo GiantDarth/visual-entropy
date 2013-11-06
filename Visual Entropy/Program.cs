@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using BinaryToBitmap;
 
 namespace Visual_Entropy
 {
@@ -10,25 +11,39 @@ namespace Visual_Entropy
 	{
 		public static void Main(string[] args)
 		{
-			int width = 50;
-			int height = 50;
-
-			Random rand = new Random();
-			int[,] pixels = Get_Pixels(rand, width, height);
-
-			for(int x = 0; x < width; x++)
+			try
 			{
-				for (int y = 0; y < height; y++)
-				{
-					Console.Write("#{0}", Color.FromArgb(pixels[x,y]).Name);
-					if (y < height - 1) Console.Write(",");
-				}
+				Console.WriteLine("Visual Entropy");
+				Console.WriteLine("Copyright (c) 2013 Christopher Robert Philabaum");
+				Console.WriteLine();
+
+				int width = 512;
+				int height = 512;
+				string path = "temp.png";
+
+				Random rand = new Random();
+				Console.Write("Setting the values... ");
+				int[,] pixels = Get_Pixels(rand, width, height);
+				Console.WriteLine("done!");
+
+				Console.Write("Saving the picture to {0}... ", path);
+				BinaryToBitmap.BinaryToBitmap.ToPNG(width, height, pixels, "temp.png");
+				Console.WriteLine("done!");
+
 				Console.WriteLine();
 			}
-
-			Console.WriteLine();
-			Console.Write("Press ENTER to continue... ");
-			Console.ReadKey();
+			catch(Exception error)
+			{
+				Console.WriteLine();
+				Console.WriteLine(error.Message);
+				Console.WriteLine(error.StackTrace);
+			}
+			finally
+			{
+				Console.WriteLine();
+				Console.Write("Press ENTER to continue... ");
+				Console.ReadKey();
+			}
 		}
 
 
@@ -41,12 +56,13 @@ namespace Visual_Entropy
 			{
 				for (int y = 0; y < height; y++)
 				{
-					byte b = Convert.ToByte((uint)rand.Next() >> 24);
+					byte bit = 0;
+					if ((uint)rand.Next(int.MinValue, int.MaxValue) >> 31 > 0) bit = 0xFF;
 					pixels[x, y] = 0;
-					pixels[x, y] = !isAlpha ? Set_Alpha(pixels[x, y], 255) : Set_Alpha(pixels[x,y], b);
-					pixels[x, y] = Set_Red(pixels[x, y], b);
-					pixels[x, y] = Set_Green(pixels[x, y], b);
-					pixels[x, y] = Set_Blue(pixels[x, y], b);
+					pixels[x, y] = !isAlpha ? Set_Alpha(pixels[x, y], 255) : Set_Alpha(pixels[x,y], bit);
+					pixels[x, y] = Set_Red(pixels[x, y], bit);
+					pixels[x, y] = Set_Green(pixels[x, y], bit);
+					pixels[x, y] = Set_Blue(pixels[x, y], bit);
 				}
 			}
 
@@ -114,6 +130,13 @@ namespace Visual_Entropy
 			color = Convert.ToInt32((color << 8) + cBytes[2]); // Blue
 
 			return color;
+		}
+
+
+
+		public static int Round_By_Multiple(int value, int multiple)
+		{
+			return multiple * (value / multiple);
 		}
 	}
 }
