@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Drawing;
 using VisualEntropy.BinaryToBitmap;
 
@@ -42,6 +43,8 @@ namespace C7Theory.VisualEntropy
 #else
 				string path = args[args.Length - 1];
 #endif
+				// Converts the path to a universal, absolute path that can be used on both Windows and Unix-based paltforms.
+				path = new Uri(Path.GetFullPath(path)).LocalPath;
 
 				Console.WriteLine("Visual Entropy");
 				Console.WriteLine("Copyright (c) 2013 Christopher Robert Philabaum");
