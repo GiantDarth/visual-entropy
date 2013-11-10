@@ -19,12 +19,12 @@ namespace C7Theory.VisualEntropy
 			int exitCode = 0;
 			if (args.Contains("--help"))
 			{
-				Display_Help();
+				DisplayHelp();
 				exitCode = 1;
 			}
 			if (exitCode == 0 && (args.Contains("-v") || args.Contains("--version")))
 			{
-				Display_Version();
+				DisplayVersion();
 				exitCode = 1;
 			}
 
@@ -35,7 +35,7 @@ namespace C7Theory.VisualEntropy
 
 			try
 			{
-				Validate_Parameters(args);
+				ValidateParameters(args);
 				int width = 256;
 				if (args.Contains("-w") || args.Contains("--width"))
 				{
@@ -55,7 +55,7 @@ namespace C7Theory.VisualEntropy
 #else
 				if (args.Length < 1)
 				{
-					Display_Help();
+					DisplayHelp();
 					return 1;
 				}
 				string path = args[args.Length - 1];
@@ -69,13 +69,14 @@ namespace C7Theory.VisualEntropy
 
 				Random rand = new Random();
 				Console.Write("Setting the values... ");
-				int[,] pixels = Get_Pixels(rand, width, height);
+				int[,] pixels = GetPixels(rand, width, height);
 				Console.WriteLine("done!");
 
 				Console.Write("Saving the picture to {0}... ", path);
 				BinaryToBitmap.ToPNG(width, height, pixels, "temp.png");
 				Console.WriteLine("done!");
 #if DEBUG
+				// Opens the picture if it is in DEBUG mode.
 				System.Diagnostics.Process.Start(path);
 #endif
 			}
@@ -98,7 +99,51 @@ namespace C7Theory.VisualEntropy
 			return exitCode;
 		}
 
-		public static void Validate_Parameters(string[] args)
+		public static void DisplayHelp()
+		{
+			Console.Write("Visual Entropy: ");
+			Console.WriteLine(GetVersionString());
+			Console.WriteLine("Copyright (c) 2013 Christopehr Robert Philabaum");
+			Console.WriteLine();
+			Console.WriteLine("A simple program that generates a bitmap through pseudo-random generation. This can have several uses, such as demonstrating the effectiveness of pseudo-random number generation, pattern recognition in cognitive science, or other personal uses (e.g. for the heck of it).");
+			Console.WriteLine();
+			Console.WriteLine("Usage: Visual Entropy [options] path/filename.png");
+			Console.WriteLine("Options:");
+			Console.WriteLine("  --help\t\t\tThe help display.");
+			Console.WriteLine("  -w pixels | --width pixels\tPicture width. Defaults to 256.");
+			Console.WriteLine("  -h pixels | --height pixels\tPicture height. Defaults to 256.");
+
+		}
+
+		public static void DisplayVersion()
+		{
+			Console.WriteLine(GetVersionString());
+		}
+
+		public static Version GetVersion()
+		{
+			return Assembly.GetExecutingAssembly().GetName().Version;
+		}
+
+		public static string GetVersionString()
+		{
+			Version version = GetVersion();
+			string versionText = "v";
+			versionText += version.Major;
+			versionText += "." + version.Minor;
+			if (version.Build != 0 || version.Revision != 0)
+			{
+				versionText += "." + version.Build;
+			}
+			if (version.Revision != 0)
+			{
+				versionText += "." + version.Revision;
+			}
+
+			return versionText;
+		}
+
+		public static void ValidateParameters(string[] args)
 		{
 			for (int index = 0; index < args.Length; index++)
 			{
@@ -142,52 +187,10 @@ namespace C7Theory.VisualEntropy
 			}
 		}
 
-		public static void Display_Help()
-		{
-			Console.Write("Visual Entropy: ");
-			Console.WriteLine(Get_Version_String());
-			Console.WriteLine("Copyright (c) 2013 Christopehr Robert Philabaum");
-			Console.WriteLine();
-			Console.WriteLine("A simple program that generates a bitmap through pseudo-random generation. This can have several uses, such as demonstrating the effectiveness of pseudo-random number generation, pattern recognition in cognitive science, or other personal uses (e.g. for the heck of it).");
-			Console.WriteLine();
-			Console.WriteLine("Usage: Visual Entropy [options] path/filename.png");
-			Console.WriteLine("Options:");
-			Console.WriteLine("  --help\t\t\tThe help display.");
-			Console.WriteLine("  -w pixels | --width pixels\tPicture width. Defaults to 256.");
-			Console.WriteLine("  -h pixels | --height pixels\tPicture height. Defaults to 256.");
 
-		}
-
-		public static void Display_Version()
-		{
-			Console.WriteLine(Get_Version_String());
-		}
-
-		public static string Get_Version_String()
-		{
-			Version version = Get_Version();
-			string versionText = "v";
-			versionText += version.Major;
-			versionText += "." + version.Minor;
-			if (version.Build != 0 || version.Revision != 0)
-			{
-				versionText += "." + version.Build;
-			}
-			if (version.Revision != 0)
-			{
-				versionText += "." + version.Revision;
-			}
-
-			return versionText;
-		}
-
-		public static Version Get_Version()
-		{
-			return Assembly.GetExecutingAssembly().GetName().Version;
-		}
 
 		#region Pixel Methods
-		public static int[,] Get_Pixels(Random rand, int width, int height, bool isAlpha = false)
+		public static int[,] GetPixels(Random rand, int width, int height, bool isAlpha = false)
 		{
 			// Width, Height, RGBa
 			int[,] pixels = new int[width, height];
@@ -198,10 +201,10 @@ namespace C7Theory.VisualEntropy
 					byte bit = 0;
 					if ((uint)rand.Next(int.MinValue, int.MaxValue) >> 31 > 0) bit = 0xFF;
 					pixels[x, y] = 0;
-					pixels[x, y] = !isAlpha ? Set_Alpha(pixels[x, y], 255) : Set_Alpha(pixels[x, y], bit);
-					pixels[x, y] = Set_Red(pixels[x, y], bit);
-					pixels[x, y] = Set_Green(pixels[x, y], bit);
-					pixels[x, y] = Set_Blue(pixels[x, y], bit);
+					pixels[x, y] = !isAlpha ? SetAlpha(pixels[x, y], 255) : SetAlpha(pixels[x, y], bit);
+					pixels[x, y] = SetRed(pixels[x, y], bit);
+					pixels[x, y] = SetGreen(pixels[x, y], bit);
+					pixels[x, y] = SetBlue(pixels[x, y], bit);
 				}
 			}
 
@@ -210,7 +213,7 @@ namespace C7Theory.VisualEntropy
 
 
 
-		private static byte[] Get_RGBa(int color)
+		private static byte[] GetRGBa(int color)
 		{
 			// Red, Green, Blue, Alpha
 			byte[] cBytes = new byte[4];
@@ -222,14 +225,14 @@ namespace C7Theory.VisualEntropy
 			return cBytes;
 		}
 
-		private static byte[] Get_RGBa(Color color)
+		private static byte[] GetRGBa(Color color)
 		{
-			return Get_RGBa(color.ToArgb());
+			return GetRGBa(color.ToArgb());
 		}
 
-		private static int Set_Red(int color, byte red)
+		private static int SetRed(int color, byte red)
 		{
-			byte[] cBytes = Get_RGBa(color);
+			byte[] cBytes = GetRGBa(color);
 			color = Convert.ToInt32(cBytes[3]); // Alpha
 			color = Convert.ToInt32((color << 8) + red);
 			color = Convert.ToInt32((color << 8) + cBytes[1]); // Green
@@ -238,9 +241,9 @@ namespace C7Theory.VisualEntropy
 			return color;
 		}
 
-		private static int Set_Green(int color, byte green)
+		private static int SetGreen(int color, byte green)
 		{
-			byte[] cBytes = Get_RGBa(color);
+			byte[] cBytes = GetRGBa(color);
 			color = Convert.ToInt32(cBytes[3]); // Alpha
 			color = Convert.ToInt32((color << 8) + cBytes[0]);
 			color = Convert.ToInt32((color << 8) + green); // Green
@@ -249,9 +252,9 @@ namespace C7Theory.VisualEntropy
 			return color;
 		}
 
-		private static int Set_Blue(int color, byte blue)
+		private static int SetBlue(int color, byte blue)
 		{
-			byte[] cBytes = Get_RGBa(color);
+			byte[] cBytes = GetRGBa(color);
 			color = Convert.ToInt32(cBytes[3]); // Alpha
 			color = Convert.ToInt32((color << 8) + cBytes[0]); // Red
 			color = Convert.ToInt32((color << 8) + cBytes[1]); // Green
@@ -260,9 +263,9 @@ namespace C7Theory.VisualEntropy
 			return color;
 		}
 
-		private static int Set_Alpha(int color, byte alpha)
+		private static int SetAlpha(int color, byte alpha)
 		{
-			byte[] cBytes = Get_RGBa(color);
+			byte[] cBytes = GetRGBa(color);
 			color = Convert.ToInt32(alpha);
 			color = Convert.ToInt32((color << 8) + cBytes[0]); // Red
 			color = Convert.ToInt32((color << 8) + cBytes[1]); // Green
