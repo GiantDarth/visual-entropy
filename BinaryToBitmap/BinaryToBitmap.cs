@@ -22,10 +22,5 @@ namespace VisualEntropy.BinaryToBitmap
 
 			bitmap.Save(path, ImageFormat.Png);
 		}
-
-		private static void ConvertTo_Unix_Path(string path)
-		{
-
-		}
 	}
 }
