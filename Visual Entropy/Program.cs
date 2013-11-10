@@ -19,7 +19,7 @@ namespace C7Theory.VisualEntropy
 			if (args.Contains("--help"))
 			{
 				Display_Help();
-				Console.WriteLine();
+				exitCode = 1;
 			}
 			else try
 			{
@@ -41,6 +41,11 @@ namespace C7Theory.VisualEntropy
 					path = args[args.Length - 1];
 				}
 #else
+				if (args.Length < 1)
+				{
+					Display_Help();
+					return 1;
+				}
 				string path = args[args.Length - 1];
 #endif
 				// Converts the path to a universal, absolute path that can be used on both Windows and Unix-based paltforms.
@@ -83,9 +88,6 @@ namespace C7Theory.VisualEntropy
 
 		public static void Validate_Parameters(string[] args)
 		{
-#if !DEBUG
-			if (args.Length < 1) { throw new FormatException("A path must at least be passed."); }
-#endif
 			for (int index = 0; index < args.Length; index++)
 			{
 				string param = args[index];
