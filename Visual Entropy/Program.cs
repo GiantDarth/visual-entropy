@@ -132,6 +132,8 @@ namespace C7Theory.VisualEntropy
 			Console.WriteLine("Visual Entropy");
 			Console.WriteLine("Copyright (c) 2013 Christopehr Robert Philabaum");
 			Console.WriteLine();
+			Console.WriteLine("A simple program that generates a bitmap through pseudo-random generation. This can have several uses, such as demonstrating the effectiveness of pseudo-random number generation, pattern recognition in cognitive science, or other personal uses (e.g. for the heck of it).");
+			Console.WriteLine();
 			Console.WriteLine("Usage: Visual Entropy [options] path/filename.png");
 			Console.WriteLine("Options:");
 			Console.WriteLine("  --help\t\t\tThe help display.");
