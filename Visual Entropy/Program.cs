@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +35,15 @@ namespace Visual_Entropy
 				{
 					height = Int32.Parse(args[Array.IndexOf(args, "-h") + 1]);
 				}
+#if DEBUG
+				string path = "temp.png";
+				if (args.Length > 0)
+				{
+					path = args[args.Length - 1];
+				}
+#else
 				string path = args[args.Length - 1];
+#endif
 
 				Console.WriteLine("Visual Entropy");
 				Console.WriteLine("Copyright (c) 2013 Christopher Robert Philabaum");
@@ -54,14 +64,17 @@ namespace Visual_Entropy
 			{
 				Console.WriteLine();
 				Console.WriteLine(error.Message);
-				Console.WriteLine(error.StackTrace);
-
 				exitCode = 1;
+#if DEBUG
+				Console.WriteLine(error.StackTrace);
 			}
-
-			Console.WriteLine();
-			Console.Write("Press ENTER to continue... ");
-			Console.ReadKey();
+			finally
+			{
+				Console.WriteLine();
+				Console.Write("Press ENTER to continue... ");
+				Console.ReadKey();
+#endif
+			}
 
 			return exitCode;
 		}
