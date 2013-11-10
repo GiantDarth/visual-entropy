@@ -91,13 +91,18 @@ namespace C7Theory.VisualEntropy
 			for (int index = 0; index < args.Length; index++)
 			{
 				string param = args[index];
+				// If the first character of the parameter is a dash.
 				if (param[0] == '-')
 				{
-					switch (param[1])
+					// Switch between the different cases of the second character.
+					switch (param)
 					{
-						case ('w'):
-						case ('h'):
-							if (index != args.Length - 1 && (args[index + 1][0] != '-' || args[index + 1][0] != '\\'))
+						case ("-w"):
+						case ("--width"):
+						case ("-h"):
+						case ("--height"):
+							// If it isn't the last argument and if the next argument doesn't begin with a dash.
+							if (index != args.Length - 1 && args[index + 1][0] != '-')
 							{
 								index++;
 							}
@@ -107,11 +112,7 @@ namespace C7Theory.VisualEntropy
 									param[1]));
 							}
 							break;
-						case ('-'):
-							if (index != args.Length - 1 && String.Format("{0}{1}", param[0], param[1]) != "--")
-							{
-								throw new FormatException("Invalid argument.");
-							}
+						case ("--help"):
 							break;
 						default:
 							if (index != args.Length - 1)
