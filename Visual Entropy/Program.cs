@@ -57,8 +57,9 @@ namespace Visual_Entropy
 				Console.Write("Saving the picture to {0}... ", path);
 				BinaryToBitmap.BinaryToBitmap.ToPNG(width, height, pixels, "temp.png");
 				Console.WriteLine("done!");
-
-				Console.WriteLine();
+#if DEBUG
+				System.Diagnostics.Process.Start(path);
+#endif
 			}
 			catch (Exception error)
 			{
