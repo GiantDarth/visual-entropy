@@ -5,7 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace BinaryToBitmap
+namespace VisualEntropy.BinaryToBitmap
 {
 	public static class BinaryToBitmap
 	{

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-using BinaryToBitmap;
+using VisualEntropy.BinaryToBitmap;
 
-namespace Visual_Entropy
+namespace C7Theory.VisualEntropy
 {
 	class Program
 	{
@@ -55,7 +55,7 @@ namespace Visual_Entropy
 				Console.WriteLine("done!");
 
 				Console.Write("Saving the picture to {0}... ", path);
-				BinaryToBitmap.BinaryToBitmap.ToPNG(width, height, pixels, "temp.png");
+				BinaryToBitmap.ToPNG(width, height, pixels, "temp.png");
 				Console.WriteLine("done!");
 #if DEBUG
 				System.Diagnostics.Process.Start(path);

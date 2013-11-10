@@ -7,8 +7,8 @@
     <ProjectGuid>{98D52283-1749-4EA0-B277-22D450EFF914}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BinaryToBitmap</RootNamespace>
-    <AssemblyName>BinaryToBitmap</AssemblyName>
+    <RootNamespace>VisualEntropy.BinaryToBitmap</RootNamespace>
+    <AssemblyName>VisualEntropy.BinaryToBitmap</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
