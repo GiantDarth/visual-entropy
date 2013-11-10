@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System.Reflection;
 using VisualEntropy.BinaryToBitmap;
 
 namespace C7Theory.VisualEntropy
@@ -21,7 +22,18 @@ namespace C7Theory.VisualEntropy
 				Display_Help();
 				exitCode = 1;
 			}
-			else try
+			if (exitCode == 0 && (args.Contains("-v") || args.Contains("--version")))
+			{
+				Display_Version();
+				exitCode = 1;
+			}
+
+			if (exitCode != 0)
+			{
+				return exitCode;
+			}
+
+			try
 			{
 				Validate_Parameters(args);
 				int width = 256;
@@ -113,6 +125,8 @@ namespace C7Theory.VisualEntropy
 							}
 							break;
 						case ("--help"):
+						case ("-v"):
+						case ("--version"):
 							break;
 						default:
 							if (index != args.Length - 1)
@@ -130,7 +144,8 @@ namespace C7Theory.VisualEntropy
 
 		public static void Display_Help()
 		{
-			Console.WriteLine("Visual Entropy");
+			Console.Write("Visual Entropy: ");
+			Console.WriteLine(Get_Version_String());
 			Console.WriteLine("Copyright (c) 2013 Christopehr Robert Philabaum");
 			Console.WriteLine();
 			Console.WriteLine("A simple program that generates a bitmap through pseudo-random generation. This can have several uses, such as demonstrating the effectiveness of pseudo-random number generation, pattern recognition in cognitive science, or other personal uses (e.g. for the heck of it).");
@@ -143,6 +158,33 @@ namespace C7Theory.VisualEntropy
 
 		}
 
+		public static void Display_Version()
+		{
+			Console.WriteLine(Get_Version_String());
+		}
+
+		public static string Get_Version_String()
+		{
+			Version version = Get_Version();
+			string versionText = "v";
+			versionText += version.Major;
+			versionText += "." + version.Minor;
+			if (version.Build != 0 || version.Revision != 0)
+			{
+				versionText += "." + version.Build;
+			}
+			if (version.Revision != 0)
+			{
+				versionText += "." + version.Revision;
+			}
+
+			return versionText;
+		}
+
+		public static Version Get_Version()
+		{
+			return Assembly.GetExecutingAssembly().GetName().Version;
+		}
 
 		#region Pixel Methods
 		public static int[,] Get_Pixels(Random rand, int width, int height, bool isAlpha = false)
