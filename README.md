@@ -4,6 +4,8 @@ Visual Entropy
 * Mercurial (Primary): https://bitbucket.org/chaos7theory/visual-entropy
 * Git: https://github.com/chaos7theory/visual-entropy
 
+A simple program that generates a bitmap through pseudo-random generation. This can have several uses, such as demonstrating the effectiveness of pseudo-random number generation, pattern recognition in cognitive science, or other personal uses (e.g. for the heck of it).
+
 System Requirements
 ===================
 Windows XP (Service Pack 3), Windows Vista, Windows 7, Windows 8, Windows 8.1 (32-/64-bit)
