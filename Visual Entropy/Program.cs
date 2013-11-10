@@ -24,7 +24,7 @@ namespace Visual_Entropy
 			{
 				Validate_Parameters(args);
 				int width = 256;
-				if(args.Contains("-w") || args.Contains("--width"))
+				if (args.Contains("-w") || args.Contains("--width"))
 				{
 					width = Int32.Parse(args[Array.IndexOf(args, "-w") + 1]);
 				}
@@ -82,8 +82,11 @@ namespace Visual_Entropy
 							{
 								index++;
 							}
-							else throw new FormatException(String.Format("Missing value for argument '{0}'.",
-								param[1]));
+							else
+							{
+								throw new FormatException(String.Format("Missing value for argument '{0}'.",
+									param[1]));
+							}
 							break;
 						case ('-'):
 							if (index != args.Length - 1 && String.Format("{0}{1}", param[0], param[1]) != "--")
@@ -92,7 +95,7 @@ namespace Visual_Entropy
 							}
 							break;
 						default:
-							if(index != args.Length - 1)
+							if (index != args.Length - 1)
 								throw new FormatException("Invalid argument.");
 							break;
 					}
