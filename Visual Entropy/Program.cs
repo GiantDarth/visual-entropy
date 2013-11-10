@@ -68,6 +68,7 @@ namespace Visual_Entropy
 
 		public static void Validate_Parameters(string[] args)
 		{
+			if (args.Length < 1) { throw new FormatException("A path must at least be passed."); }
 			for (int index = 0; index < args.Length; index++)
 			{
 				string param = args[index];
