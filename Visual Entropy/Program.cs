@@ -84,7 +84,7 @@ namespace C7Theory.VisualEntropy
 			{
 				Console.WriteLine();
 				Console.WriteLine(error.Message);
-				exitCode = 1;
+				exitCode = 2;
 #if DEBUG
 				Console.WriteLine(error.StackTrace);
 			}
