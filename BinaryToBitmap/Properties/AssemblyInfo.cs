@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("BinaryToBitmap")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Christopher Robert Philabaum")]
 [assembly: AssemblyProduct("BinaryToBitmap")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("Copyright © 2013 Christopher Robert Philabaum")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
