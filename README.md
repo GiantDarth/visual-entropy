@@ -2,7 +2,7 @@ Visual Entropy
 ==============
 
 * Mercurial (Primary): https://bitbucket.org/chaos7theory/visual-entropy
-* Git:
+* Git: https://github.com/chaos7theory/visual-entropy
 
 System Requirements
 ===================
