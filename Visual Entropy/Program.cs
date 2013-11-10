@@ -120,7 +120,7 @@ namespace C7Theory.VisualEntropy
 					}
 				}
 
-				if (!args[args.Length - 1].EndsWith(".png") && !args[args.Length - 1].EndsWith(".PNG"))
+				if (!args[args.Length - 1].ToLower().EndsWith(".png"))
 				{
 					throw new FormatException("The file doesn't end with '.png' or '.PNG'.");
 				}
@@ -143,7 +143,7 @@ namespace C7Theory.VisualEntropy
 		}
 
 
-
+		#region Pixel Methods
 		public static int[,] Get_Pixels(Random rand, int width, int height, bool isAlpha = false)
 		{
 			// Width, Height, RGBa
@@ -167,7 +167,7 @@ namespace C7Theory.VisualEntropy
 
 
 
-		public static byte[] Get_RGBa(int color)
+		private static byte[] Get_RGBa(int color)
 		{
 			// Red, Green, Blue, Alpha
 			byte[] cBytes = new byte[4];
@@ -179,12 +179,12 @@ namespace C7Theory.VisualEntropy
 			return cBytes;
 		}
 
-		public static byte[] Get_RGBa(Color color)
+		private static byte[] Get_RGBa(Color color)
 		{
 			return Get_RGBa(color.ToArgb());
 		}
 
-		public static int Set_Red(int color, byte red)
+		private static int Set_Red(int color, byte red)
 		{
 			byte[] cBytes = Get_RGBa(color);
 			color = Convert.ToInt32(cBytes[3]); // Alpha
@@ -195,7 +195,7 @@ namespace C7Theory.VisualEntropy
 			return color;
 		}
 
-		public static int Set_Green(int color, byte green)
+		private static int Set_Green(int color, byte green)
 		{
 			byte[] cBytes = Get_RGBa(color);
 			color = Convert.ToInt32(cBytes[3]); // Alpha
@@ -206,7 +206,7 @@ namespace C7Theory.VisualEntropy
 			return color;
 		}
 
-		public static int Set_Blue(int color, byte blue)
+		private static int Set_Blue(int color, byte blue)
 		{
 			byte[] cBytes = Get_RGBa(color);
 			color = Convert.ToInt32(cBytes[3]); // Alpha
@@ -217,7 +217,7 @@ namespace C7Theory.VisualEntropy
 			return color;
 		}
 
-		public static int Set_Alpha(int color, byte alpha)
+		private static int Set_Alpha(int color, byte alpha)
 		{
 			byte[] cBytes = Get_RGBa(color);
 			color = Convert.ToInt32(alpha);
@@ -227,5 +227,6 @@ namespace C7Theory.VisualEntropy
 
 			return color;
 		}
+		#endregion
 	}
 }
