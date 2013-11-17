@@ -99,6 +99,7 @@ namespace C7Theory.VisualEntropy
 			return exitCode;
 		}
 
+		#region Command Prompt
 		public static void DisplayHelp()
 		{
 			Console.Write("Visual Entropy: ");
@@ -186,6 +187,7 @@ namespace C7Theory.VisualEntropy
 				}
 			}
 		}
+		#endregion
 
 
 
