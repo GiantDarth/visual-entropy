@@ -69,7 +69,19 @@ namespace C7Theory.VisualEntropy
 
 				Random rand = new Random();
 				Console.Write("Setting the values... ");
-				int[,] pixels = GetPixels(rand, width, height);
+				int[,] pixels = new int[width, height];
+				if (args.Contains("-g16"))
+				{
+					pixels = Get16GrayscalePixels(rand, width, height);
+				}
+				else if (args.Contains("-g"))
+				{
+					pixels = Get256GrayscalePixels(rand, width, height);
+				}
+				else
+				{
+					pixels = GetBinaryPixels(rand, width, height);
+				}
 				Console.WriteLine("done!");
 
 				Console.Write("Saving the picture to {0}... ", path);
@@ -110,9 +122,12 @@ namespace C7Theory.VisualEntropy
 			Console.WriteLine();
 			Console.WriteLine("Usage: Visual Entropy [options] path/filename.png");
 			Console.WriteLine("Options:");
+			Console.WriteLine("(Defaults to 2 states: black or white pixels)");
 			Console.WriteLine("  --help\t\t\tThe help display.");
 			Console.WriteLine("  -w pixels | --width pixels\tPicture width. Defaults to 256.");
 			Console.WriteLine("  -h pixels | --height pixels\tPicture height. Defaults to 256.");
+			Console.WriteLine("  -g\t\t\t8-bit (256 states) grayscale.");
+			Console.WriteLine("  -g16\t\t\t4-bit (16 states) grayscale.");
 
 		}
 
@@ -173,6 +188,8 @@ namespace C7Theory.VisualEntropy
 						case ("--help"):
 						case ("-v"):
 						case ("--version"):
+						case ("-g"):
+						case ("-g16"):
 							break;
 						default:
 							if (index != args.Length - 1)
@@ -192,7 +209,7 @@ namespace C7Theory.VisualEntropy
 
 
 		#region Pixel Methods
-		public static int[,] GetPixels(Random rand, int width, int height, bool isAlpha = false)
+		public static int[,] GetBinaryPixels(Random rand, int width, int height, bool isAlpha = false)
 		{
 			// Width, Height, RGBa
 			int[,] pixels = new int[width, height];
@@ -201,12 +218,66 @@ namespace C7Theory.VisualEntropy
 				for (int y = 0; y < height; y++)
 				{
 					byte bit = 0;
-					if ((uint)rand.Next(int.MinValue, int.MaxValue) >> 31 > 0) bit = 0xFF;
+					if ((uint)rand.Next(int.MinValue, int.MaxValue) >> 31 > 0) { bit = 0xFF; }
 					pixels[x, y] = 0;
 					pixels[x, y] = !isAlpha ? SetAlpha(pixels[x, y], 255) : SetAlpha(pixels[x, y], bit);
 					pixels[x, y] = SetRed(pixels[x, y], bit);
 					pixels[x, y] = SetGreen(pixels[x, y], bit);
 					pixels[x, y] = SetBlue(pixels[x, y], bit);
+				}
+			}
+
+			return pixels;
+		}
+
+		public static int[,] Get16GrayscalePixels(Random rand, int width, int height, bool isAlpha = false)
+		{
+			// Width, Height, RGBa
+			int[,] pixels = new int[width, height];
+			for (int x = 0; x < width; x++)
+			{
+				for (int y = 0; y < height; y++)
+				{
+					// 4-digit binary number for 16 possible states.
+					byte binary = (byte)((rand.Next(int.MinValue, int.MaxValue) >> 28) & 0x0F);
+					byte gray = 0;
+					// Converts the 4-digit binary number to an 8-digit byte spread out evenly.
+					for (int shift = 3; shift >= 0; shift--)
+					{
+						if ((int)((binary >> shift) & 0x01) > 0) { gray += 0x03; }
+						if (shift > 0)
+						{
+							gray <<= 2;
+						}
+					}
+
+					pixels[x, y] = 0;
+					pixels[x, y] = !isAlpha ? SetAlpha(pixels[x, y], 255) : SetAlpha(pixels[x, y], gray);
+					pixels[x, y] = SetRed(pixels[x, y], gray);
+					pixels[x, y] = SetGreen(pixels[x, y], gray);
+					pixels[x, y] = SetBlue(pixels[x, y], gray);
+				}
+			}
+
+			return pixels;
+		}
+
+		public static int[,] Get256GrayscalePixels(Random rand, int width, int height, bool isAlpha = false)
+		{
+			// Width, Height, RGBa
+			int[,] pixels = new int[width, height];
+			for (int x = 0; x < width; x++)
+			{
+				for (int y = 0; y < height; y++)
+				{
+					// 8-digit binary number for 256 possible states.
+					byte gray = (byte)((rand.Next(int.MinValue, int.MaxValue) >> 24) & 0xFF);
+
+					pixels[x, y] = 0;
+					pixels[x, y] = !isAlpha ? SetAlpha(pixels[x, y], 255) : SetAlpha(pixels[x, y], gray);
+					pixels[x, y] = SetRed(pixels[x, y], gray);
+					pixels[x, y] = SetGreen(pixels[x, y], gray);
+					pixels[x, y] = SetBlue(pixels[x, y], gray);
 				}
 			}
 
